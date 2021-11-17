@@ -1,5 +1,6 @@
 import requests
 from player import Player
+from datetime import datetime
 
 def main():
     url = "https://nhlstatisticsforohtu.herokuapp.com/players"
@@ -11,21 +12,24 @@ def main():
     players = []
 
     for player_dict in response:
-        if player_dict['nationality']=='FIN':
-            player = Player(
-                player_dict['name'], 
-                player_dict['nationality'],
-                player_dict['assists'],
-                player_dict['goals'],
-                player_dict['penalties'],
-                player_dict['team'],
-                player_dict['games']
-            )
-            players.append(player)
+        
+        player = Player(
+            player_dict['name'], 
+            player_dict['nationality'],
+            player_dict['assists'],
+            player_dict['goals'],
+            player_dict['penalties'],
+            player_dict['team'],
+            player_dict['games']
+        )
+        players.append(player)
 
-    print("Oliot:")
+    print(f"Players from FIN {datetime.now()}:\n")
 
-    for player in players:
+    for player in sorted(
+        filter(lambda p: p.nationality=='FIN', players), 
+        key=lambda x: x.goals + x.assists, reverse=True
+        ):
         print(player)
 
 if __name__ == "__main__":
