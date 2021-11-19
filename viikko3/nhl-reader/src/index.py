@@ -1,4 +1,3 @@
-import requests
 from player import Player
 from datetime import datetime
 from player_reader import PlayerReader
