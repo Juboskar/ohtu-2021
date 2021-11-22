@@ -33,6 +33,28 @@ Register With Nonmatching Password And Password Confirmation
     Submit Credentials
     Register Should Fail With Message  Password and password confirmation not matching
 
+Login After Successful Registration
+    Set Username  jaakko
+    Set Password  jaakko123
+    Set Password Confirmation  jaakko123
+    Submit Credentials
+    Go To Login Page
+    Set Username  jaakko
+    Set Password  jaakko123
+    Submit Login Credentials
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username  j
+    Set Password  jaakko1
+    Set Password Confirmation  jaakko1
+    Submit Credentials
+    Go To Login Page
+    Set Username  j
+    Set Password  jaakko1
+    Submit Login Credentials
+    Login Should Fail With Message  Invalid username or password
+
 *** Keywords ***
 Set Username
     [Arguments]  ${username}
@@ -49,10 +71,21 @@ Set Password Confirmation
 Submit Credentials
     Click Button  Register
 
+Submit Login Credentials
+    Click Button  Login
+
 Register Should Succeed
     Welcome Page Should Be Open
 
 Register Should Fail With Message
     [Arguments]  ${message}
     Register Page Should Be Open
+    Page Should Contain  ${message}
+
+Login Should Succeed
+    Main Page Should Be Open
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
     Page Should Contain  ${message}
