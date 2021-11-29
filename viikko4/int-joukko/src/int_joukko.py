@@ -33,8 +33,6 @@ class IntJoukko:
             return True
         return False
 
-
-
     def kopioi_taulukko(self, a, b):
         for i in range(0, len(a)):
             b[i] = a[i]
@@ -57,29 +55,18 @@ class IntJoukko:
     @staticmethod
     def leikkaus(a, b):
         y = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
-
-        for i in range(0, len(a_taulu)):
-            for j in range(0, len(b_taulu)):
-                if a_taulu[i] == b_taulu[j]:
-                    y.lisaa(b_taulu[j])
-
+        for x in list(filter(lambda luku: luku in a.to_int_list() 
+            and luku in b.to_int_list(), 
+            a.to_int_list() + b.to_int_list())):
+            y.lisaa(x)
         return y
 
     @staticmethod
     def erotus(a, b):
-        z = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
-
-        for i in range(0, len(a_taulu)):
-            z.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            z.poista(b_taulu[i])
-
-        return z
+        y = IntJoukko()
+        for x in list(filter(lambda luku: luku not in b.to_int_list(), a.to_int_list())):
+            y.lisaa(x)
+        return y
 
     def __str__(self):
         s = f"{list(filter(lambda i: i !=0, self.ljono))}"
