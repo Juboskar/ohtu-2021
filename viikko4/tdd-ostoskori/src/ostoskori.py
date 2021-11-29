@@ -18,7 +18,7 @@ class Ostoskori:
 
     def lisaa_tuote(self, lisattava: Tuote):
         ostos = Ostos(lisattava)
-        self.__ostokset.append(lisattava)
+        self.__ostokset.append(ostos)
         # lisää tuotteen
         
 
