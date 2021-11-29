@@ -11,43 +11,29 @@ class IntJoukko:
         for i in range(0, self.alkioiden_lkm):
             if n == self.ljono[i]:
                 return True
-        
         return False
 
     def lisaa(self, n):
         if not self.kuuluu(n):
             self.ljono[self.alkioiden_lkm] = n
             self.alkioiden_lkm += 1
-
+            
             if self.alkioiden_lkm % len(self.ljono) == 0:
                 taulukko_old = self.ljono
                 self.ljono = [0] * (self.alkioiden_lkm + self.kasvatuskoko)
                 self.kopioi_taulukko(taulukko_old, self.ljono)
-
             return True
 
         return False
 
     def poista(self, n):
-        kohta = -1
-        apu = 0
-
-        for i in range(0, self.alkioiden_lkm):
-            if n == self.ljono[i]:
-                kohta = i  # siis luku löytyy tuosta kohdasta :D
-                self.ljono[kohta] = 0
-                break
-
-        if kohta != -1:
-            for j in range(kohta, self.alkioiden_lkm - 1):
-                apu = self.ljono[j]
-                self.ljono[j] = self.ljono[j + 1]
-                self.ljono[j + 1] = apu
-
-            self.alkioiden_lkm = self.alkioiden_lkm - 1
+        if self.kuuluu(n):
+            self.ljono.remove(n)
+            self.alkioiden_lkm -= 1
             return True
-
         return False
+
+
 
     def kopioi_taulukko(self, a, b):
         for i in range(0, len(a)):
@@ -58,24 +44,14 @@ class IntJoukko:
 
     def to_int_list(self):
         taulu = [0] * self.alkioiden_lkm
-
         for i in range(0, len(taulu)):
             taulu[i] = self.ljono[i]
-
         return taulu
 
     @staticmethod
     def yhdiste(a, b):
         x = IntJoukko()
-        a_taulu = a.to_int_list()
-        b_taulu = b.to_int_list()
-
-        for i in range(0, len(a_taulu)):
-            x.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            x.lisaa(b_taulu[i])
-
+        for i in a.to_int_list() + b.to_int_list(): x.lisaa(i) 
         return x
 
     @staticmethod
